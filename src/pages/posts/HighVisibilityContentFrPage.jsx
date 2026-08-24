@@ -6,20 +6,6 @@ import Footer from '../../components/Footer';
 import { useLang } from '../../contexts/LangContext';
 import '../../blog-post.css';
 
-function ImgHold({ label, sub }) {
-  return (
-    <div className="bp-img-hold">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <circle cx="8.5" cy="8.5" r="1.5"/>
-        <path d="M21 15l-5-5L5 21"/>
-      </svg>
-      <span className="bp-img-hold-label">{label}</span>
-      <span className="bp-img-hold-sub">{sub}</span>
-    </div>
-  );
-}
-
 const SECTIONS = [
   { id: 's-core',      label: 'Principes fondamentaux du GEO' },
   { id: 's-onpage',    label: 'Mise en forme on-page' },
@@ -149,7 +135,6 @@ export default function HighVisibilityContentFrPage() {
               <li><strong>Claude</strong> a tendance à synthétiser le raisonnement et privilégie les argumentaires complets et bien structurés.</li>
               <li><strong>Les AI Overviews de Google</strong> privilégient des réponses directes, adaptées aux extraits, étroitement liées à l'autorité SEO traditionnelle.</li>
             </ul>
-            <ImgHold label="Figure 1" sub="Comment Perplexity, Claude et les AI Overviews de Google priorisent le contenu différemment" />
             <p>Une <strong>mise en forme de contenu SEO</strong> solide satisfait simultanément tous ces pipelines variés en donnant aux systèmes IA des signaux propres et facilement analysables, en lesquels ils peuvent avoir confiance.</p>
           </div>
 
@@ -219,7 +204,6 @@ export default function HighVisibilityContentFrPage() {
               <li><strong>Les H3</strong> détaillent les éléments granulaires et les informations à l'appui.</li>
             </ul>
             <p>Rompre cette chaîne sémantique, par exemple en passant directement d'un H1 à un H3, risque de fragmenter le contexte de la page. Cela peut potentiellement amener un modèle d'extraction à perdre la relation parent-enfant entre les idées, ce qui entraîne une hallucination ou une citation manquée.</p>
-            <ImgHold label="Figure 2" sub="Anatomie d'une hiérarchie stricte de titres H1 → H2 → H3" />
             <h3>Le modèle de réponse directe (BLUF)</h3>
             <p>Pour améliorer vos chances d'extraction en featured snippet et d'apparition dans les AI Overviews de Google, nous recommandons la méthode Bottom Line Up Front (BLUF).</p>
             <p><strong>Mise en œuvre :</strong> commencez par une réponse directe et déclarative immédiatement sous chaque titre H2 et H3, avant de développer les détails à l'appui.</p>
@@ -233,7 +217,6 @@ export default function HighVisibilityContentFrPage() {
               <li><strong>Schéma LocalBusiness ou Organization :</strong> à déployer à l'échelle du site pour établir la présence physique de votre marque, sa zone d'activité, et les données de l'entité corporate pour les requêtes IA localisées.</li>
               <li><strong>Schéma ProfilePage et Person :</strong> à utiliser sur les pages de biographie d'auteur et de direction pour établir des signaux E-E-A-T clairs, prouvant aux moteurs IA que le contenu est rédigé par des experts humains vérifiés.</li>
             </ol>
-            <ImgHold label="Figure 3" sub="Associer chaque type de schéma JSON-LD au type de page correspondant" />
           </section>
 
           {/* 04 */}

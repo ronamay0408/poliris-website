@@ -6,20 +6,6 @@ import Footer from '../../components/Footer';
 import { useLang } from '../../contexts/LangContext';
 import '../../blog-post.css';
 
-function ImgHold({ label, sub }) {
-  return (
-    <div className="bp-img-hold">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <circle cx="8.5" cy="8.5" r="1.5"/>
-        <path d="M21 15l-5-5L5 21"/>
-      </svg>
-      <span className="bp-img-hold-label">{label}</span>
-      <span className="bp-img-hold-sub">{sub}</span>
-    </div>
-  );
-}
-
 const SECTIONS = [
   { id: 's-strategy',    label: 'What Is AI Content Generation Strategy?' },
   { id: 's-reshaping',   label: 'Reshaping Digital Marketing' },
@@ -173,7 +159,6 @@ export default function BeyondKeywordsPage() {
               <li>Stronger <Link to={`/${lang}/visibility`}>visibility</Link> in AI-driven answer surfaces, not just traditional search rankings.</li>
               <li>More consistent content quality at scale, without proportional headcount increases.</li>
             </ol>
-            <ImgHold label="Figure 1" sub="How AI answer engines reshape the B2B buyer's research path" />
             <div className="bp-note">
               <div className="bp-note-label">Expert Tip</div>
               <p>Map your content topics to the specific questions your buyers ask at each stage of the purchase journey. AI engines reward content that mirrors natural inquiry, not content built around internal product terminology.</p>
@@ -207,7 +192,6 @@ export default function BeyondKeywordsPage() {
               <li>Add a structured definition block to any pillar page that explains a core concept.</li>
               <li>Align your brand content strategy with the specific questions your buyers ask during the consideration phase.</li>
             </ol>
-            <ImgHold label="Figure 2" sub="Where to focus first when integrating generative techniques" />
           </section>
 
           {/* 05 */}
@@ -224,7 +208,6 @@ export default function BeyondKeywordsPage() {
               <li><strong>Support claims with reasoning.</strong> Language models heavily weight explanatory logic. A declarative statement like <em>"Automation reduces sales cycles by eliminating manual compliance reviews"</em> provides far higher information gain than a generic claim like <em>"Automation is an industry-leading solution."</em></li>
               <li><strong>Use consistent entity language.</strong> Name your products, categories, and use cases the same way across every asset so the model can build a reliable picture of what your brand does.</li>
             </ol>
-            <ImgHold label="Figure 3" sub="Three practical shifts for LLM-driven content enhancement" />
             <p>This is where <strong>LLM optimization</strong> diverges sharply from traditional SEO. Keyword density barely factors in. Conceptual coherence matters far more. For large brands running dozens of content programs, applying these shifts at scale usually requires audit tooling and editorial governance. A common approach is to run existing high-traffic pages through an LLM evaluation layer that flags weak answer structures before a rewrite cycle begins.</p>
           </section>
 

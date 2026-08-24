@@ -6,20 +6,6 @@ import Footer from '../../components/Footer';
 import { useLang } from '../../contexts/LangContext';
 import '../../blog-post.css';
 
-function ImgHold({ label, sub }) {
-  return (
-    <div className="bp-img-hold">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <circle cx="8.5" cy="8.5" r="1.5"/>
-        <path d="M21 15l-5-5L5 21"/>
-      </svg>
-      <span className="bp-img-hold-label">{label}</span>
-      <span className="bp-img-hold-sub">{sub}</span>
-    </div>
-  );
-}
-
 const SECTIONS = [
   { id: 's-core',      label: 'Core Principles of GEO' },
   { id: 's-onpage',    label: 'On-Page Formatting' },
@@ -149,7 +135,6 @@ export default function HighVisibilityContentPage() {
               <li><strong>Claude</strong> tends to synthesize logic and favors comprehensive, well-structured arguments.</li>
               <li><strong>Google's AI Overviews</strong> prioritize direct, snippet-friendly answers mapped tightly to traditional SEO authority.</li>
             </ul>
-            <ImgHold label="Figure 1" sub="How Perplexity, Claude, and Google's AI Overviews prioritize content differently" />
             <p>Strong <strong>SEO content formatting</strong> satisfies all of these varied pipelines simultaneously by giving AI systems clean, parseable signals they can trust.</p>
           </div>
 
@@ -219,7 +204,6 @@ export default function HighVisibilityContentPage() {
               <li><strong>The H3s</strong> drill down into the granular, supporting details.</li>
             </ul>
             <p>Breaking that semantic chain, such as skipping from an H1 directly to an H3 risks fragmenting the page's context. This can potentially cause an extraction model to lose the parent-child relationship between ideas, resulting in a hallucination or a skipped citation.</p>
-            <ImgHold label="Figure 2" sub="Anatomy of a strict H1 → H2 → H3 heading hierarchy" />
             <h3>The Answer-First Pattern (BLUF)</h3>
             <p>To improve your odds of snippet extraction and surfacing in Google's AI Overviews, we recommend the Bottom Line Up Front (BLUF) method.</p>
             <p><strong>Implementation:</strong> Lead with a direct, declarative answer immediately below each H2 and H3 header, before expanding into supporting details.</p>
@@ -233,7 +217,6 @@ export default function HighVisibilityContentPage() {
               <li><strong>LocalBusiness or Organization Schema:</strong> Deploy this site-wide to establish your brand's physical presence, operating area, and corporate entity data for localized AI queries.</li>
               <li><strong>ProfilePage and Person Schema:</strong> Use this on author bios and leadership pages to establish clear E-E-A-T signals, proving to AI engines that the content is written by verified human experts.</li>
             </ol>
-            <ImgHold label="Figure 3" sub="Matching JSON-LD schema types to page type" />
           </section>
 
           {/* 04 */}
