@@ -23,23 +23,29 @@ export default function AuditCodeBanner() {
     <>
       <div className="audit-banner" role="button" tabIndex={0} onClick={openModal}>
         <div className="audit-banner__row">
-          <span className="audit-banner__content">
-            <span className="audit-banner__star" aria-hidden="true">
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 2 C52 34 58 46 96 50 C58 54 52 66 50 98 C48 66 42 54 4 50 C42 46 48 34 50 2 Z" fill="#bcd7ff" />
-              </svg>
-            </span>
-            <span className="audit-banner__text">
-              <span className="audit-banner__line">{t('auditBanner.line')}</span>
-              <span className="audit-banner__text-short">{t('auditBanner.lineShort')}</span>
-            </span>
+          <span className="audit-banner__star" aria-hidden="true">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 2 C52 34 58 46 96 50 C58 54 52 66 50 98 C48 66 42 54 4 50 C42 46 48 34 50 2 Z" fill="#bcd7ff" />
+            </svg>
           </span>
-          <span className="audit-banner__cta">
-            <span className="audit-banner__cta-label">{t('auditBanner.cta')}</span>
-            <span className="btn__icon btn__icon--black">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="13" height="13">
-                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-              </svg>
+          <span className="audit-banner__text">
+            <span className="audit-banner__line">
+              {t('auditBanner.line')}{' '}
+              <span className="audit-banner__cta">
+                {t('auditBanner.cta')}
+                <svg className="audit-banner__cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="12" height="12">
+                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                </svg>
+              </span>
+            </span>
+            <span className="audit-banner__text-short">
+              {t('auditBanner.lineShort')}{' '}
+              <span className="audit-banner__cta">
+                {t('auditBanner.cta')}
+                <svg className="audit-banner__cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="12" height="12">
+                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                </svg>
+              </span>
             </span>
           </span>
         </div>

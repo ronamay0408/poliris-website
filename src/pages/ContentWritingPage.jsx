@@ -123,12 +123,11 @@ const PIPELINE_STEPS = [
 function PipeIcon({ index, active, done }) {
   const icons = [
     <span key="0" className="cw-pipe-letter">K</span>,
-    <span key="1" className="cw-pipe-letter">A</span>,
-    <svg key="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>,
-    <span key="3" className="cw-pipe-letter">L</span>,
-    <svg key="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>,
-    <svg key="5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>,
-    <svg key="6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2"><polyline points="20 6 9 17 4 12"/></svg>,
+    <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>,
+    <span key="2" className="cw-pipe-letter">L</span>,
+    <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>,
+    <svg key="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>,
+    <svg key="5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2"><polyline points="20 6 9 17 4 12"/></svg>,
   ];
   return icons[index];
 }
@@ -543,17 +542,20 @@ function PipelineTrack() {
   const steps = wr.steps;
   const [cur, setCur] = useState(0);
   const [fading, setFading] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(true);
   const N = steps.length;
 
   function go(i) {
     if (i < 0 || i >= N || i === cur) return;
+    setAutoPlay(false);
     setFading(true);
     setTimeout(() => { setCur(i); setFading(false); }, 150);
   }
 
-  /* Auto-advance through the steps; restarts whenever cur changes,
-     whether from the timer or a manual click. */
+  /* Auto-advance through the steps; stops for good the moment the
+     visitor steps in (a step click or a prev/next click via go()). */
   useEffect(() => {
+    if (!autoPlay) return;
     const id = setInterval(() => {
       setFading(true);
       setTimeout(() => {
@@ -562,7 +564,7 @@ function PipelineTrack() {
       }, 150);
     }, 2500);
     return () => clearInterval(id);
-  }, [cur, N]);
+  }, [cur, N, autoPlay]);
 
   const d = steps[cur];
   return (

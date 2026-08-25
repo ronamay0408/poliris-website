@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLang } from '../contexts/LangContext';
+import { trackEvent } from '../lib/analytics';
 import { hasAccountCookie } from '../lib/hasAccountCookie';
 import { APP_URL } from '../lib/appUrl';
 
@@ -194,14 +195,17 @@ export default function Navbar() {
                 <a className="nav__cta" href={APP_URL}>{t('nav.dashboard')}</a>
               </>
             ) : (
-              <div className="nav__account-pill">
-                {langSwitcher}
-                <span className="nav__account-divider" />
-                <a className="nav__login" href={APP_URL}>
-                  <span className="nav__login-icon">{PERSON_ICON}</span>
-                  {t('nav.logIn')}
-                </a>
-              </div>
+              <>
+                <div className="nav__account-pill">
+                  {langSwitcher}
+                  <span className="nav__account-divider" />
+                  <a className="nav__login" href={APP_URL}>
+                    <span className="nav__login-icon">{PERSON_ICON}</span>
+                    {t('nav.logIn')}
+                  </a>
+                </div>
+                <a className="nav__cta" href={APP_URL} onClick={() => trackEvent('trial_cta_clicked')}>{t('nav.freeTrial')}</a>
+              </>
             );
           })()}
         </div>
@@ -291,7 +295,10 @@ export default function Navbar() {
             {hasAccount ? (
               <a className="nav__mobile-cta" href={APP_URL} onClick={() => setOpen(false)}>{t('nav.dashboard')}</a>
             ) : (
-              <a className="nav__mobile-cta nav__mobile-cta--login" href={APP_URL} onClick={() => setOpen(false)}>{t('nav.logIn')}</a>
+              <>
+                <a className="nav__mobile-cta nav__mobile-cta--login" href={APP_URL} onClick={() => setOpen(false)}>{t('nav.logIn')}</a>
+                <a className="nav__mobile-cta" href={APP_URL} onClick={() => { setOpen(false); trackEvent('trial_cta_clicked'); }}>{t('nav.freeTrial')}</a>
+              </>
             )}
           </div>
         </div>
