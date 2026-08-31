@@ -60,7 +60,7 @@ function ScrollHint() {
   );
 }
 
-export default function Hero({ eyebrow, title, lead, primaryCta, secondaryCta, note, showDashboard = true, showAiBand = true, dark = false, bottom = null }) {
+export default function Hero({ eyebrow, title, audience, lead, primaryCta, secondaryCta, note, showDashboard = true, showAiBand = true, dark = false, bottom = null }) {
   const { lang } = useLang();
   const primaryTrial = isTrialCta(primaryCta);
   const primaryDemo  = isDemoCta(primaryCta);
@@ -82,6 +82,7 @@ export default function Hero({ eyebrow, title, lead, primaryCta, secondaryCta, n
         <div className="hero__inner">
           <div className="eyebrow">{eyebrow}</div>
           <h1 className="hero__h1">{title}</h1>
+          {audience && <p className="hero__audience">{audience}</p>}
           <p className="hero__lead">{lead}</p>
           <div className="hero__actions">
             <a
