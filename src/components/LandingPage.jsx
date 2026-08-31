@@ -666,19 +666,19 @@ function ThIssuesPanel() {
     return () => observer.disconnect();
   }, []);
 
-  // The Deploy sequence — independent of the card's own CSS-driven slide
+  // The Deploy sequence — this card's slide swap is pure CSS
   // (.th-scroll__track's @keyframes th-scroll-move, ~14s/cycle, slide 2
-  // visible from 50%–85% i.e. roughly 7s–11.9s in). This card's slide swap
-  // is pure CSS, not React state, so rather than rebuild that (it works,
-  // and the pipeline slide it drives stays untouched on purpose), this
-  // effect just times its own loop to land inside that same visible
-  // window: starts once the card scrolls into the page's viewport (same
-  // trigger the pipeline icons and the count above already use), waits
-  // ~7.3s for slide 2 to be the one showing, then repeats every full cycle.
+  // visible from 50%–85% i.e. roughly 7s–11.9s in), so rather than rebuild
+  // that as React state, this effect times its own loop to land inside
+  // that same visible window: waits ~7.3s for slide 2 to be the one
+  // showing, then repeats every full cycle. Critically, its own t=0 is
+  // pinned to the exact moment .engine-row__visual gets .visible (below)
+  // — the same class-toggle that unpauses the CSS animation itself — so
+  // the two clocks can't drift apart the way two independent observers
+  // eventually do.
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    let intervalId;
     let timers = [];
     let started = false;
     const after = (ms, fn) => { timers.push(setTimeout(fn, ms)); };
@@ -703,19 +703,56 @@ function ThIssuesPanel() {
       after(3200, () => setDeployPhase('live'));
     }
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting || started) return;
-          started = true;
-          after(7300, runSequence);
-          intervalId = setInterval(runSequence, 14000);
-        });
-      },
-      { threshold: 0.3 },
-    );
-    io.observe(el);
-    return () => { io.disconnect(); clearInterval(intervalId); timers.forEach(clearTimeout); };
+    function start() {
+      if (started) return;
+      started = true;
+      // Scheduled against a fixed absolute anchor, not a chained
+      // setTimeout(fn, 14000) — a chain only guarantees "at least" 14000ms
+      // per hop, and the handful of ms of event-loop/scheduling slack each
+      // hop adds is invisible for a lap or two but keeps accumulating.
+      // The CSS animation runs on the compositor and never drifts, so by
+      // lap 3+ the JS side has fallen behind enough to blow past the
+      // 100ms safety margin below and land after slide 2 is already
+      // visible — showing the previous lap's stale "Live" again. Recomputing
+      // the delay from the anchor on every lap self-corrects instead of
+      // compounding.
+      //
+      // First target is 6900ms, not 7000/7300: slide 2 (Issues Overview)
+      // actually becomes visible at t=7000 in the CSS cycle, and the
+      // reset-to-idle has to land strictly *before* that on every lap —
+      // landing after leaves the previous lap's "Live" state showing for
+      // the gap, since deployPhase only starts at 'idle' by default on the
+      // very first lap.
+      const anchor = performance.now() + 6900;
+      let lap = 0;
+      function scheduleNext() {
+        const delay = Math.max(0, anchor + lap * 14000 - performance.now());
+        timers.push(setTimeout(() => {
+          runSequence();
+          lap += 1;
+          scheduleNext();
+        }, delay));
+      }
+      scheduleNext();
+    }
+
+    // Sync to the exact same signal that unpauses .th-scroll__track's own
+    // CSS animation (.engine-row__visual.reveal.visible), not a separate
+    // IntersectionObserver on this element — two independent triggers
+    // drift apart over time, landing "live" outside slide 2's visible
+    // window instead of the click actually happening on-screen.
+    const visualEl = el.closest('.engine-row__visual');
+    let mo;
+    if (visualEl?.classList.contains('visible')) {
+      start();
+    } else if (visualEl) {
+      mo = new MutationObserver(() => {
+        if (visualEl.classList.contains('visible')) start();
+      });
+      mo.observe(visualEl, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    return () => { mo?.disconnect(); timers.forEach(clearTimeout); };
   }, []);
 
   const isLive = deployPhase === 'live';
