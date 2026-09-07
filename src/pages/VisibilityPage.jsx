@@ -3,7 +3,7 @@ import '../visibility.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Seo from '../components/Seo';
-import RealMarketMapV2 from '../components/RealMarketMapV2';
+import LiveMarketsMap from '../components/LiveMarketsMap';
 import Hero from '../components/Hero';
 import CtaBand from '../components/CtaBand';
 import VisibilityDashboard from '../components/VisibilityDashboard';
@@ -290,8 +290,8 @@ export default function VisibilityPage() {
               </div>
 
               {/* Map: full width, below the heading */}
-              <div className="rm2-wrap reveal">
-                <RealMarketMapV2 />
+              <div className="reveal">
+                <LiveMarketsMap />
               </div>
             </div>
           </div>

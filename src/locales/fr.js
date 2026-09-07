@@ -45,6 +45,9 @@ export default {
       primaryCta: "Commencer l'essai gratuit",
       secondaryCta: 'Réserver une démo',
       note: "Prêt à l'emploi. Utilisable par tous.",
+      websitePlaceholder: 'votre-site.com',
+      websiteCta: 'Essai gratuit',
+      websiteError: 'Entrez un site valide, comme votre-site.com',
     },
     valueChain: {
       eyebrow: 'La chaîne de valeur complète',
@@ -226,10 +229,10 @@ export default {
     },
     realMarket: {
       eyebrow: '02 · Marché réel',
-      h2Pre: 'Votre marché réel,',
-      h2Hl: 'pas le monde entier.',
-      lead: "Chaque niveau a ses propres concurrents choisissez une portée et regardez les noms changer.",
-      hint: "Chaque niveau a ses propres concurrents choisissez une portée et regardez les noms changer.",
+      h2Pre: 'Où Poliris',
+      h2Hl: 'est disponible.',
+      lead: "Découvrez les marchés déjà actifs, et ceux à venir.",
+      hint: "Découvrez les marchés déjà actifs, et ceux à venir.",
     },
     sourceIntel: {
       eyebrow: '03 · Intelligence des sources',
@@ -1984,7 +1987,7 @@ export default {
   },
 
   auditBanner: {
-    line: "Vous avez déjà un code de notre équipe ? Ou vous voulez votre audit de visibilité IA gratuit ?",
+    line: "Voyez comment ChatGPT et Gemini décrivent votre marque dès maintenant- audit gratuit, aucune carte requise.",
     lineShort: 'Un code, ou un audit gratuit ?',
     cta: 'Obtenir mon audit gratuit',
   },
@@ -1998,7 +2001,7 @@ export default {
     tabFree: 'Audit gratuit',
     tabCode: "J'ai un code",
     emailPlaceholder: 'Votre email professionnel',
-    websitePlaceholder: 'votremarque.com',
+    websitePlaceholder: 'votre-site.com',
     submitting: 'Envoi en cours…',
     getMyFreeAudit: 'Obtenir mon audit gratuit →',
     codePlaceholder: 'Entrez votre code à 6 caractères',

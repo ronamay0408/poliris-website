@@ -52,6 +52,11 @@ export default function LandingPage() {
         primaryCta={h.primaryCta}
         secondaryCta={h.secondaryCta}
         note={h.note}
+        websiteCapture={{
+          placeholder: h.websitePlaceholder,
+          ctaLabel: h.websiteCta,
+          errorText: h.websiteError,
+        }}
       />
       <ValueChain />
       {/* ProductCarousel hidden for now — restore by uncommenting. */}

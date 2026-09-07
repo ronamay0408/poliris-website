@@ -1115,13 +1115,196 @@ body.has-code-banner .hero { padding-top: calc(84px + var(--code-banner-h)); }
   display: flex;
   gap: 14px;
   justify-content: center;
+  /* flex-start, not center or the default stretch: the website-capture
+     form gains an error line below the input on an invalid domain, making
+     .hero-website-form-wrap taller than "Book a demo". stretch grows the
+     button to match; center keeps its size but re-centers it against the
+     now-taller box, sliding it down a few px. flex-start anchors both to
+     the row's top edge, which the error line never touches, so the button
+     doesn't move at all when the error appears or clears. */
+  align-items: flex-start;
   flex-wrap: wrap;
+  /* .hero__actions, .ai-band and .hero__dashboard all get the hero-fade-up
+     entrance animation (animating transform/opacity), which makes each of
+     them its own stacking context regardless of z-index set on anything
+     inside them. Without this, .ai-band and .hero__dashboard — later in
+     the DOM, each an equally "auto"-level context — always paint on top
+     of the website-capture dropdown no matter what z-index it's given. */
+  position: relative;
+  z-index: 10;
 }
 .hero__note {
   margin-top: 18px;
   font-size: 13.5px;
   color: var(--fg6);
   font-family: var(--chivo);
+}
+
+/* ── Hero website-capture CTA (type a domain, land in onboarding) ── */
+.hero-website-form-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  /* The AI-logo band below animates its own transform, which spins up a
+     stacking context of its own — without an explicit z-index here, this
+     wrap (and the dropdown inside it) would paint under that context
+     regardless of DOM order. */
+  z-index: 5;
+}
+.hero-website-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: min(440px, 100%);
+  padding: 6px 6px 6px 18px;
+  background: #fff;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px;
+  transition: border-color 0.2s;
+}
+.hero-website-form:focus-within {
+  border-color: #000;
+}
+.hero-website-form--error {
+  border-color: #d92d20;
+}
+.hero-website-form__icon {
+  display: inline-flex;
+  color: var(--fg6);
+  flex-shrink: 0;
+}
+.hero-website-form__input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.hero-website-form__input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--chivo);
+  font-size: 15px;
+  color: #000;
+  padding: 10px 8px;
+}
+.hero-website-form__input::placeholder {
+  color: var(--fg6);
+}
+.hero-website-form__suggestions {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -18px;
+  right: -6px;
+  z-index: 50;
+  max-height: 280px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, .12);
+  text-align: left;
+}
+.hero-website-form__suggestion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s;
+  /* Buttons default to text-align: center in the UA stylesheet, which
+     overrides the text-align: left set on .hero-website-form__suggestions
+     — inheritance only carries through if it's undone at the button too. */
+  text-align: left;
+}
+.hero-website-form__suggestion:hover,
+.hero-website-form__suggestion:focus-visible {
+  background: #f3f4f6;
+}
+.hero-website-form__suggestion-logo {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  border: 1px solid #f0f0f2;
+  background: #fff;
+  object-fit: contain;
+  padding: 3px;
+}
+.hero-website-form__suggestion-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.hero-website-form__suggestion-name {
+  font-family: var(--chivo);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hero-website-form__suggestion-domain {
+  font-family: var(--chivo);
+  font-size: 12px;
+  color: var(--fg6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hero-website-form__submit {
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 22px;
+  background: #000;
+  color: #fff;
+  font-family: var(--chivo);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.hero-website-form__submit:hover {
+  background: #1d1d22;
+}
+.hero-website-form__error {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #d92d20;
+  font-family: var(--chivo);
+}
+.hero-website-form--dark {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.hero-website-form--dark:focus-within {
+  border-color: #fff;
+}
+.hero-website-form--dark .hero-website-form__icon {
+  color: rgba(255, 255, 255, 0.6);
+}
+.hero-website-form--dark .hero-website-form__input {
+  color: #fff;
+}
+.hero-website-form--dark .hero-website-form__input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.hero-website-form--dark .hero-website-form__submit {
+  background: #fff;
+  color: #000;
+}
+.hero-website-form--dark .hero-website-form__submit:hover {
+  background: #e8eaed;
 }
 
 /* ── Scroll hint (fixed, vertically centred, scroll-reactive) ── */
@@ -5533,6 +5716,7 @@ body.has-code-banner .hero { padding-top: calc(84px + var(--code-banner-h)); }
     gap: 10px;
   }
   .hero__actions .btn { text-align: center; justify-content: center; }
+  .hero-website-form { width: 100%; }
   .hero__note { font-size: 12.5px; margin-top: 14px; }
   .hero__dashboard { margin: 16px 16px 0; }
 
@@ -6137,6 +6321,14 @@ body.has-code-banner .hero { padding-top: calc(84px + var(--code-banner-h)); }
   26%, 44%  { opacity: 1; transform: translate(-50%, calc(-100% - 10px)) scale(1); }
   50%, 100% { opacity: 0; transform: translate(-50%, calc(-100% - 4px)) scale(0.92); }
 }
+/* Mobile-only mirror: opens downward instead of upward. There isn't
+   enough headroom above the chart on a narrow card for an upward tooltip
+   to clear the title text above it — see the .pc-tooltip mobile override. */
+@keyframes pc-tooltip-show-mobile {
+  0%, 20%   { opacity: 0; transform: translate(-50%, 4px) scale(0.92); }
+  26%, 44%  { opacity: 1; transform: translate(-50%, 10px) scale(1); }
+  50%, 100% { opacity: 0; transform: translate(-50%, 4px) scale(0.92); }
+}
 /* Chart panel visible → scroll down as the tooltip closes → hold on
    Analysis → scroll back up → settle before the loop restarts. */
 @keyframes pc-scroll-move {
@@ -6275,6 +6467,12 @@ body.has-code-banner .hero { padding-top: calc(84px + var(--code-banner-h)); }
 .th-pipe__score-lbl { display: block; font-size: 12px; font-weight: 700; color: #9aa1ac; text-transform: uppercase; letter-spacing: 0.04em; }
 .th-pipe__score-hint { display: block; font-size: 12.5px; color: #6B6E72; margin-top: 2px; }
 .th-pipe__ring { position: relative; width: 64px; height: 64px; flex: none; }
+/* The <svg> carries width/height="64" as HTML attributes so its
+   viewBox math (cx/cy/r all in 64-unit space) stays correct — but that
+   means it won't shrink with .th-pipe__ring's own width on mobile unless
+   told to explicitly, leaving the ring graphic and the "73%" text (centered
+   on the container via inset:0) misaligned at smaller sizes. */
+.th-pipe__ring svg { display: block; width: 100%; height: 100%; }
 .th-pipe__ring-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #1F3EA8; }
 /* Draws in once the card is revealed — starts fully hidden (dashoffset =
    full circumference) and animates to the actual score's offset. */
@@ -6719,7 +6917,7 @@ body.has-code-banner .hero { padding-top: calc(84px + var(--code-banner-h)); }
 @media (max-width: 860px) {
   .engine-row { padding: 48px 0; }
   .engine-row__inner, .engine-row__inner--rev { flex-direction: column; align-items: stretch; gap: 32px; }
-  .engine-row__copy, .engine-row__visual { flex: none; }
+  .engine-row__copy, .engine-row__visual { flex: none; max-width: none; }
   .engine-row__desc { max-width: none; }
   .engine-window__body { min-height: 260px; }
   .engine-placeholder { min-height: 204px; }
@@ -6733,8 +6931,49 @@ body.has-code-banner .hero { padding-top: calc(84px + var(--code-banner-h)); }
   .engine-placeholder { min-height: 150px; }
   .pc-chart { height: 180px; }
   .pc-dot__label { display: none; }
+  .pc-dot__badge { width: 21px; height: 21px; }
   .pc-quad__label { font-size: 7px; }
+  /* Not enough headroom above a narrow chart for the tooltip to open
+     upward without covering the title text — flip it to open downward,
+     and shrink it so it doesn't span multiple neighboring dots. */
+  .pc-tooltip {
+    animation-name: pc-tooltip-show-mobile;
+    padding: 7px 9px;
+    min-width: 84px;
+  }
+  .pc-tooltip::after {
+    top: -6px;
+    bottom: auto;
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+  }
+  .pc-tooltip__you { font-size: 9px; }
+  .pc-tooltip__name { font-size: 10.5px; margin-bottom: 4px; }
+  .pc-tooltip__row { font-size: 9px; gap: 6px; }
+  .pc-tooltip__pill { font-size: 8px; padding: 1px 6px; }
   .cg-review-diff { grid-template-columns: 1fr; }
+
+  /* The 3 stage pills sit ~100px apart center-to-center on a narrow card —
+     at desktop font size "Content Quality 59%" alone is wider than that,
+     so they overlap. Shrunk enough here to comfortably clear each other. */
+  .th-pipe__pill { font-size: 7px; padding: 2px 5px; gap: 2px; white-space: nowrap; }
+  .th-pipe__badge { font-size: 7px; padding: 2px 5px; gap: 3px; }
+  .th-pipe__badge svg { width: 9px; height: 9px; flex-shrink: 0; }
+  .th-pipe__icon { width: 18px; height: 18px; }
+  .th-pipe__icon img { width: 12px; height: 12px; }
+  .th-pipe__ring { width: 44px; height: 44px; }
+  .th-pipe__ring-val { font-size: 11px; }
+  .th-pipe__score-lbl { font-size: 9px; }
+  .th-pipe__score-hint { font-size: 9px; }
+}
+/* Narrowest common phones (~320px) — the 3 stage pills are still tight
+   even at their 480px sizing, so drop each pill's own % value (the ring
+   already communicates the overall score) to buy back width. */
+@media (max-width: 340px) {
+  .th-pipe__pill-val { display: none; }
+  .th-pipe__badge { font-size: 6.5px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -45,6 +45,9 @@ export default {
       primaryCta: 'Start your free trial',
       secondaryCta: 'Book a demo',
       note: 'Ready to go. Anyone can use it.',
+      websitePlaceholder: 'your-website.com',
+      websiteCta: 'Start Free',
+      websiteError: 'Enter a valid website, like your-website.com',
     },
     valueChain: {
       eyebrow: 'The full value chain',
@@ -226,10 +229,10 @@ export default {
     },
     realMarket: {
       eyebrow: '02 · Real market',
-      h2Pre: 'Your real market,',
-      h2Hl: 'not the whole world.',
-      lead: 'Each level has its own competitors pick a scope and watch the names change.',
-      hint: 'Each level has its own competitors pick a scope and watch the names change.',
+      h2Pre: 'Where Poliris',
+      h2Hl: 'is live.',
+      lead: 'See which markets are already live, and what’s coming next.',
+      hint: 'See which markets are already live, and what’s coming next.',
     },
     sourceIntel: {
       eyebrow: '03 · Source intelligence',
@@ -1994,7 +1997,7 @@ export default {
   },
 
   auditBanner: {
-    line: 'Already have a code from our team? Or want your free AI Visibility Audit?',
+    line: 'See how ChatGPT and Gemini describe your brand right now-  free audit, no card needed.',
     lineShort: 'Have a code, or want a free audit?',
     cta: 'Get your free audit',
   },
@@ -2008,7 +2011,7 @@ export default {
     tabFree: 'Get a free audit',
     tabCode: 'I have a code',
     emailPlaceholder: 'Your work email',
-    websitePlaceholder: 'yourbrand.com',
+    websitePlaceholder: 'your-website.com',
     submitting: 'Submitting…',
     getMyFreeAudit: 'Get My Free Audit →',
     codePlaceholder: 'Enter your 6-character code',
